@@ -1,0 +1,41 @@
+# Configuration settings for CatchupArchiver
+ROOT:
+  REDIS_HOST: localhost
+  ARCHIVER_REDIS_DB: 3
+  FORWARDER_PUBLISH_QUEUE: catchup_foreman_ack_publish
+  ARCHIVE_CTRL_PUBLISH_QUEUE: archive_ctrl_publish
+  ARCHIVE_CTRL_CONSUME_QUEUE: archive_ctrl_consume
+  TELEMETRY_QUEUE: telemetry_queue
+  CAMERA_NAME: COMCAM
+  ARCHIVER_NAME: CatchupArchiver
+  SHORT_NAME: Catchup
+
+  ARCHIVE_CONTROLLER_NAME: cu_archive_controller
+  ASSOCIATION_KEY: catchuparchiver_association
+
+  # message types
+  FWDR_HEALTH_CHECK_ACK: CATCHUP_FWDR_HEALTH_CHECK_ACK
+  FILE_INGEST_REQUEST: CATCHUP_FILE_INGEST_REQUEST
+  NEW_ARCHIVE_ITEM: NEW_CATCHUP_ARCHIVE_ITEM
+  FWDR_XFER_PARAMS: CATCHUP_FWDR_XFER_PARAMS
+  FWDR_END_READOUT: CATCHUP_FWDR_END_READOUT
+  FWDR_HEADER_READY: CATCHUP_FWDR_HEADER_READY
+
+  ACK_TIMEOUT: 60
+
+  CSC:
+    BEACON:
+        SECONDS_TO_EXPIRE: 10
+        SECONDS_TO_UPDATE: 3
+
+  BASE_BROKER_ADDR: 141.142.238.15:5672/test_cu
+  ARCHIVE:
+    ARCHIVE_LOGIN: ARC
+    ARCHIVE_IP: 141.142.238.15
+    CHECKSUM_TYPE: MD5   # Current available options: MD5, CRC-32 
+    FORWARDER_STAGING: /data/staging/comcam/forwarder
+    OODS_STAGING: /data/staging/comcam/oods
+    DBB_STAGING: /data/staging/cc_dbb
+  ATS:
+    WFS_RAFT: "00"
+    WFS_CCD: [ "22/0", "22/1", "22/2" ]
