@@ -1,16 +1,18 @@
 # Configuration settings for CatchupArchiver
 ROOT:
   REDIS_HOST: localhost
-  ARCHIVER_REDIS_DB: 3
+  ARCHIVER_REDIS_DB: 7 
   FORWARDER_PUBLISH_QUEUE: catchup_foreman_ack_publish
+  OODS_PUBLISH_QUEUE: catchup_publish_to_oods
+  OODS_CONSUME_QUEUE: oods_publish_to_catchup
   ARCHIVE_CTRL_PUBLISH_QUEUE: archive_ctrl_publish
   ARCHIVE_CTRL_CONSUME_QUEUE: archive_ctrl_consume
   TELEMETRY_QUEUE: telemetry_queue
   CAMERA_NAME: COMCAM
   ARCHIVER_NAME: CatchupArchiver
-  SHORT_NAME: Catchup
+  SHORT_NAME: CATCHUP
 
-  ARCHIVE_CONTROLLER_NAME: cu_archive_controller
+  ARCHIVE_CONTROLLER_NAME: catchup_controller
   ASSOCIATION_KEY: catchuparchiver_association
 
   # message types
@@ -39,3 +41,16 @@ ROOT:
   ATS:
     WFS_RAFT: "00"
     WFS_CCD: [ "22/0", "22/1", "22/2" ]
+
+  efd: "ncsa_teststand_efd"
+
+  # expiration in minutes
+  local_catchup_expiration: 43200 # 30 days
+  remote_catchup_expiration: 20160 # 14 days
+      
+  # sal topic names to subscribe for catchuparchiver
+  sal_topics:
+    largeFileObjectAvailable: "lsst.sal.CCHeaderService.logevent_largeFileObjectAvailable"
+    endReadout: "lsst.sal.CCCamera.logevent_endReadout"
+    startIntegration: "lsst.sal.CCCamera.logevent_startIntegration"
+    imageInOODS: "lsst.sal.CCArchiver.logevent_imageInOODS"
