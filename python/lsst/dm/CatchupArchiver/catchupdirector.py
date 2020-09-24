@@ -47,6 +47,7 @@ class CatchupDirector(MessageDirector):
             'CATCHUP_FWDR_END_READOUT_ACK': self.process_fwdr_end_readout_ack,
             'CATCHUP_FWDR_HEADER_READY_ACK': self.process_header_ready_ack,
             'SCAN': self.process_scan,
+            'SCAN_ONE': self.process_scan_one,
             'SCAN_ACK': self.process_scan_ack,
         }
 
@@ -124,6 +125,12 @@ class CatchupDirector(MessageDirector):
         await self.publish_message(self.forwarder_consume_queue, d)
         LOGGER.info(f'published {d} to {self.forwarder_consume_queue}')
 
+    async def process_scan_one(self, msg):
+        LOGGER.info(f'scan_one msg received: {msg}')
+
+        img_id = msg['IMAGE_ID']
+        await self.start_msg_sequence(img_id)
+
     async def process_scan_ack(self, msg):
         LOGGER.info(f'scan_ack received: {msg}')
 
@@ -140,7 +147,6 @@ class CatchupDirector(MessageDirector):
 
         for img_id in imgs:
             await self.start_msg_sequence(img_id)
-            break
 
     def query_efd(self):
         end_time = Time.now()
